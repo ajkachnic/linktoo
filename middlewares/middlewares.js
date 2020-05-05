@@ -1,20 +1,14 @@
 import nextConnect from 'next-connect'
-import session from 'express-session'
 
 import passport from '../utils/passport'
 import database from './database'
+import session from './session'
 
 const middleware = nextConnect()
 
 middleware
   .use(database)
-  .use(
-    session({
-      secret: 'this is my secret',
-      resave: false,
-      saveUninitialized: true
-    })
-  )
+  .use(session)
   .use(passport.initialize())
   .use(passport.session())
 
