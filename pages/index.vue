@@ -1,57 +1,37 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        linktoo
-      </h1>
-      <h2 class="subtitle">
-        A simple way to connect all of your social medias and links.
-      </h2>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
-  </div>
+  <main class="container">
+    <title-text text="LinkToo" />
+    <body-text
+      text="A simple way to connect all of your social medias and links."
+    />
+    <spacer height="1rem" />
+    <body-text
+      text="Easily put everything in one place, no more deep searching. One profile to end them all."
+    />
+    <spacer height="2rem" />
+    <button-dark text="Try it" link="/start" />
+  </main>
 </template>
-
 <script>
-import Logo from '~/components/Logo.vue'
+import TitleText from '~/components/TitleText.vue'
+import BodyText from '~/components/BodyText.vue'
+import ButtonDark from '~/components/ButtonDark.vue'
+
+import Spacer from '~/components/Spacer.vue'
 
 export default {
   components: {
-    Logo
+    TitleText,
+    BodyText,
+    ButtonDark,
+    Spacer
   }
 }
 </script>
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+<style scoped>
+main {
+  padding: 1rem;
 }
 
 .subtitle {

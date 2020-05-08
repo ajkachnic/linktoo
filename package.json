@@ -12,15 +12,24 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
-    "connect-mongo": "^3.2.0",
+    "@editorjs/editorjs": "^2.17.0",
+    "@editorjs/header": "^2.4.1",
+    "@editorjs/list": "^1.4.0",
+    "@editorjs/marker": "^1.2.2",
+    "@editorjs/paragraph": "^2.6.1",
+    "connect-mongodb-session": "^2.3.1",
+    "epic-spinners": "^1.1.0",
     "express-session": "^1.17.1",
     "next-connect": "^0.6.5",
-    "next-session": "^3.1.0",
     "nuxt": "^2.0.0",
     "passport": "^0.4.1",
     "passport-github": "^1.1.0",
     "passport-google-oauth": "^2.0.0",
     "passport-twitter": "^1.0.4",
+    "sanitize-html": "^1.23.0",
+    "sweetalert2": "^9.10.12",
+    "vue-sweetalert2": "^3.0.5",
+    "vuedraggable": "^2.23.2",
     "vuex": "^3.3.0"
   },
   "devDependencies": {

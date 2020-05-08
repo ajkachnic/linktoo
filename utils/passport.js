@@ -2,17 +2,20 @@ import passport from 'passport'
 import { Strategy as TwitterStrategy } from 'passport-twitter'
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth'
 import { Strategy as GithubStrategy } from 'passport-github'
-import { db as connect } from '../middlewares/database'
-console.log(process.env.GOOGLE_KEY)
-console.log(process.env.GOOGLE_SECRET)
+import { db } from '../middlewares/database'
+let database
+db().then((val) => (database = val.db))
 
-const { db } = connect()
-console.log(db)
 passport.serializeUser(function(user, done) {
   done(null, user.id)
 })
-passport.deserializeUser(function(id, done) {
-  done(null)
+passport.deserializeUser(async function(id, done) {
+  const collection = database.collection('users')
+
+  const user = await collection.findOne({
+    id
+  })
+  done(null, user)
 })
 passport.use(
   new TwitterStrategy(
@@ -22,14 +25,19 @@ passport.use(
       callbackURL: '/api/auth/twitter/callback'
     },
     async (token, tokenSecret, profile, done) => {
-      console.log(profile)
-      return done(null, profile)
-      // const collection = db.collection('users')
-      // const data = await collection.insertOne({
-      //   ...profile
-      // })
+      const collection = database.collection('users')
+      const user = await collection.findOne({
+        id: profile.id,
+        provider: profile.provider
+      })
+      if (user) {
+        return done(null, user)
+      }
+      await collection.insertOne({
+        ...profile
+      })
 
-      // return done(null, data)
+      return done(null, profile)
     }
   )
 )
@@ -41,14 +49,12 @@ passport.use(
       callbackURL: '/api/auth/google/callback'
     },
     async (accessToken, refreshToken, profile, done) => {
-      console.log(profile)
-      return done(null, profile)
-      // const collection = db.collection('users')
-      // const data = await collection.insertOne({
-      //   ...profile
-      // })
+      const collection = database.collection('users')
+      await collection.insertOne({
+        ...profile
+      })
 
-      // return done(null, data)
+      return done(null, profile)
     }
   )
 )
@@ -60,14 +66,12 @@ passport.use(
       callbackURL: '/api/auth/github/callback'
     },
     async (token, tokenSecret, profile, done) => {
-      console.log(profile)
-      return done(null, profile)
-      // const collection = db.collection('users')
-      // const data = await collection.insertOne({
-      //   ...profile
-      // })
+      const collection = database.collection('users')
+      await collection.insertOne({
+        ...profile
+      })
 
-      // return done(null, data)
+      return done(null, profile)
     }
   )
 )

@@ -15,7 +15,7 @@ export async function db() {
 }
 export async function setUpDb(db) {
   await db
-    .collection('tokens')
+    .collection('session')
     .createIndex('expireAt', { expireAfterSeconds: 0 })
 }
 
