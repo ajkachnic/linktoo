@@ -31,6 +31,11 @@ a {
   color: var(--clr-dark);
   text-decoration: none;
 }
+@media screen and (min-width: 600px) {
+  nav.nav ul {
+    flex-direction: column;
+  }
+}
 </style>
 <script>
 export default {

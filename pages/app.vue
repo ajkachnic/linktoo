@@ -75,14 +75,13 @@ export default {
       }
     },
     async manageLink(data) {
-      const endpoint = this.isEmpty(this.userLink) ? 'new-link' : 'update-link'
-      console.log(data)
+      const method = this.isEmpty(this.userLink) ? 'POST' : 'PUT'
       const body = {
         link: this.link,
         ...data
       }
-      const res = await fetch(`/api/${endpoint}`, {
-        method: 'POST',
+      const res = await fetch(`/api/manage-link`, {
+        method,
         body: JSON.stringify(body),
         headers: {
           'Content-Type': 'application/json'
