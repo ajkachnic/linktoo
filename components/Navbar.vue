@@ -5,9 +5,6 @@
         <a href="/">Home</a>
       </li>
       <li>
-        <a href="/pricing">Pricing</a>
-      </li>
-      <li>
         <a href="/about">About Us</a>
       </li>
       <li>
@@ -18,8 +15,8 @@
 </template>
 <style scoped>
 nav.nav {
-  background: #202020;
-  color: #fff;
+  background: var(--clr-blue);
+  color: var(--clr-dark);
   padding: 1.5em 0;
   font-weight: 500;
 }
@@ -31,7 +28,7 @@ li {
   list-style: none;
 }
 a {
-  color: #fff;
+  color: var(--clr-dark);
   text-decoration: none;
 }
 </style>
@@ -42,6 +39,9 @@ export default {
       isAuthed: false
     }
   },
+  async mounted() {
+    this.isAuthed = await this.isAuthenticated()
+  },
   methods: {
     async isAuthenticated() {
       const res = await fetch('/api/auth/is-authenticated')
@@ -49,9 +49,6 @@ export default {
 
       return json.ok
     }
-  },
-  async mounted() {
-    this.isAuthed = await this.isAuthenticated()
   }
 }
 </script>

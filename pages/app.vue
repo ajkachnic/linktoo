@@ -13,11 +13,20 @@
       <title-text
         :text="isEmpty(userLink) ? 'Create a link' : 'Edit your link'"
       />
-      <label for="link">Link address (ex. yourname): </label>
-      <input type="text" id="link" name="link" v-model="link" />
+      <p>{{ message }}</p>
+      <label v-if="isEmpty(userLink)" for="link">
+        Link address (ex. yourname):
+      </label>
+      <input
+        v-if="isEmpty(userLink)"
+        id="link"
+        v-model="link"
+        type="text"
+        name="link"
+      />
       <editor
-        @saved="newNewLink"
         :value="isEmpty(userLink) ? null : userLink"
+        @saved="manageLink"
       />
     </section>
   </main>
@@ -44,12 +53,16 @@ export default {
     return {
       name: '',
       bio: '',
+      userLink: '',
       link: '',
-      userLink: ''
+      message: ''
     }
   },
   async mounted() {
     this.userLink = await this.getUserLink()
+    if (this?.userLink?.link) {
+      this.link = this?.userLink?.link
+    }
     this.isAuthenticated()
   },
   methods: {
@@ -57,18 +70,18 @@ export default {
       const res = await fetch('/api/auth/is-authenticated')
       const json = await res.json()
 
-      console.log(json.ok)
       if (!json.ok) {
         this.$router.push('/start')
       }
     },
-    async newNewLink(data) {
-      console.log(JSON.stringify(data))
+    async manageLink(data) {
+      const endpoint = this.isEmpty(this.userLink) ? 'new-link' : 'update-link'
+      console.log(data)
       const body = {
         link: this.link,
         ...data
       }
-      const res = await fetch('/api/new-link', {
+      const res = await fetch(`/api/${endpoint}`, {
         method: 'POST',
         body: JSON.stringify(body),
         headers: {
@@ -84,38 +97,14 @@ export default {
         title: json.message || (json.ok ? 'Success' : 'An error has occurred.'),
         icon: json.ok ? 'success' : 'error'
       })
-      return json
-    },
-    async newLink(e) {
-      e.preventDefault()
-      const body = {
-        name: this.name,
-        bio: this.bio,
-        link: this.link
-      }
-      const res = await fetch('/api/new-link', {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      const json = await res.json()
-      Swal.fire({
-        toast: true,
-        showConfirmButton: false,
-        position: 'bottom-end',
-        timer: 6000,
-        title: json.message || (json.ok ? 'Success' : 'An error has occurred.'),
-        icon: json.ok ? 'success' : 'error'
-      })
+
+      this.message = `You can view your link at https://linktoo.now.sh/u/${this.link}`
       return json
     },
     async getUserLink() {
       const res = await fetch('/api/get-user-link')
       const json = await res.json()
 
-      console.log(JSON.stringify(json))
       return json
     },
     isEmpty(obj) {

@@ -5,7 +5,7 @@
       <div id="codex-editor" class />
     </div>
     <button type="button" name="button" @click="save()">
-      save
+      Save
     </button>
   </div>
 </template>
@@ -16,6 +16,7 @@ import Header from '@editorjs/header'
 import Paragraph from '@editorjs/paragraph'
 import List from '@editorjs/list'
 import Marker from '@editorjs/marker'
+import Link from '@editorjs/link'
 
 export default {
   props: {
@@ -24,13 +25,18 @@ export default {
       type: Object
     }
   },
+  data() {
+    return {
+      dataValue: this.value
+    }
+  },
   mounted() {
     this.myEditor()
   },
   methods: {
     save() {
       this.editor.save().then((savedData) => {
-        this.value = savedData
+        this.dataValue = savedData
         this.$emit('saved', savedData)
       })
     },
@@ -57,9 +63,15 @@ export default {
           },
           marker: {
             class: Marker
+          },
+          link: {
+            class: Link,
+            config: {
+              endpoint: '/api/preview'
+            }
           }
         },
-        data: this.value
+        data: this.dataValue
       })
     }
   }
@@ -70,7 +82,8 @@ export default {
 .editorx_body {
   /* width: 62%;
   margin-left: 15%; */
-  width: 60%;
+  width: 90%;
+  max-width: 25rem;
   border: 2px solid #f1f3f5;
   box-sizing: border-box;
 }

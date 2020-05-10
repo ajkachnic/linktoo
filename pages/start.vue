@@ -6,10 +6,12 @@
     />
     <spacer height="1rem" />
     <div v-if="isAuthed">
+      <button-dark text="Use the app" link="/app" />
       <button-dark text="Logout" link="api/auth/logout" />
     </div>
     <div v-else>
       <button-dark text="Sign in with GitHub" link="/api/auth/github" />
+      <spacer height="1rem" />
       <button-dark text="Sign in with Twitter" link="api/auth/twitter" />
     </div>
   </main>
@@ -34,6 +36,9 @@ export default {
       isAuthed: false
     }
   },
+  async mounted() {
+    this.isAuthed = await this.isAuthenticated()
+  },
   methods: {
     async isAuthenticated() {
       const res = await fetch('/api/auth/is-authenticated')
@@ -41,9 +46,6 @@ export default {
 
       return json.ok
     }
-  },
-  async mounted() {
-    this.isAuthed = await this.isAuthenticated()
   }
 }
 </script>

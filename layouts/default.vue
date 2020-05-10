@@ -16,10 +16,12 @@ export default {
 >
 <style>
 :root {
-  --clr-pink: #fa4659;
-  --clr-dark: #202020;
+  --clr-pink: #f4486d;
+  --clr-dark: #060120;
   --clr-light: #fff;
-  --clr-green: #a3de83;
+  --clr-alt: #f7f7f7;
+  --clr-blue: #79cfcd;
+  --clr-yellow: #ffd049;
 }
 @font-face {
   font-family: 'Sailec';
@@ -47,6 +49,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  background: var(--clr-light);
 }
 
 *,

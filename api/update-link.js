@@ -18,10 +18,15 @@ handler.post(async (req, res) => {
     const user = await usersCollection.findOne({
       id: req.session.passport.user
     })
-    if (post) {
+    if (!post) {
       res.json({
         ok: false,
-        message: 'Link already taken'
+        message: "User doesn't have a link"
+      })
+    } else if (post.user.id !== req.session.passport.user) {
+      res.json({
+        ok: false,
+        message: "User doesn't own this link"
       })
     } else {
       if (req.body.blocks) {
@@ -37,16 +42,19 @@ handler.post(async (req, res) => {
           blocks[block].data.text = clean
         }
       }
-      await linksCollection.insertOne({
-        ...req.body,
-        user: {
-          provider: user.provider,
-          id: user.id
+      await linksCollection.updateOne(
+        {
+          link: req.body.link
+        },
+        {
+          $set: {
+            ...req.body
+          }
         }
-      })
+      )
       res.json({
         ok: true,
-        message: 'Link successfully created'
+        message: 'Link successfully updated'
       })
     }
   } else {

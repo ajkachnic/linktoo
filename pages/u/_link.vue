@@ -1,10 +1,12 @@
 <template>
-  <div v-if="isEmpty(linkData)" class="spinner">
-    <breeding-rhombus-spinner
-      :animation-duration="2000"
-      :size="125"
-      color="#101010"
-    />
+  <div v-if="isEmpty(linkData)" class="center">
+    <div class="loader">
+      <breeding-rhombus-spinner
+        :animation-duration="2000"
+        :size="125"
+        color="#101010"
+      />
+    </div>
   </div>
   <div v-else class="display">
     <div v-for="(block, index) in linkData.blocks" :key="index">
@@ -30,8 +32,8 @@
       </span>
       <p
         v-else-if="block.type == 'paragraph'"
-        v-html="block.data.text"
         class="font-size: 1.25rem"
+        v-html="block.data.text"
       ></p>
     </div>
   </div>
@@ -84,7 +86,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+nav {
+  display: none;
+}
 .display {
   padding: 1rem;
 }
@@ -105,5 +110,11 @@ h5 {
 }
 h6 {
   font-size: 1rem;
+}
+.center {
+  display: grid;
+}
+.loader {
+  margin: 3rem auto;
 }
 </style>

@@ -6,7 +6,6 @@ const handler = nextConnect()
 handler.use(middleware)
 
 handler.get((req, res) => {
-  console.log(req.session.passport)
   if (req.session.passport.user) {
     res.json({
       ok: true,

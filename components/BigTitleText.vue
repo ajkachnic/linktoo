@@ -1,5 +1,5 @@
 <template>
-  <p class="body">{{ text }}</p>
+  <h1 class="title">{{ text }}</h1>
 </template>
 <script>
 export default {
@@ -13,19 +13,16 @@ export default {
 </script>
 >
 <style scoped>
-.body {
-  font-weight: 400;
-  font-size: 1rem;
+.title {
+  display: block;
+  font-weight: 700;
+  font-size: 4rem;
+  color: var(--clr-pink);
 }
 
 @media screen and (min-width: 500px) {
-  .body {
-    font-size: 1.5rem;
-  }
-}
-@media screen and (min-width: 1000px) {
-  .body {
-    font-size: 1.75rem;
+  .title {
+    font-size: 6rem;
   }
 }
 </style>

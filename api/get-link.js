@@ -7,7 +7,6 @@ handler.use(middleware)
 
 handler.get(async (req, res) => {
   if (req.session.passport) {
-    console.log(Object.keys(req.query))
     const linksCollection = req.db.collection('links')
     const post = await linksCollection.findOne({
       link: req.query.link

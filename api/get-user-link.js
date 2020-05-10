@@ -13,14 +13,12 @@ handler.get(async (req, res) => {
       id: req.session.passport.user
     })
     if (user) {
-      let body = {
+      const body = {
         'user.id': user.id || req.session.passport,
         'user.provider': user.provider
       }
 
-      console.log(body)
       const post = await linksCollection.findOne(body)
-      console.log(post)
       res.json(post == null ? {} : post)
     } else {
       res.json({
