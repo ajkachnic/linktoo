@@ -10,24 +10,13 @@
       </div>
     </section>
     <section v-else>
-      <title-text
-        :text="isEmpty(userLink) ? 'Create a link' : 'Edit your link'"
-      />
+      <title-text :text="creating ? 'Create a link' : 'Edit your link'" />
       <p>{{ message }}</p>
-      <label v-if="isEmpty(userLink)" for="link">
+      <label v-if="creating" for="link">
         Link address (ex. yourname):
       </label>
-      <input
-        v-if="isEmpty(userLink)"
-        id="link"
-        v-model="link"
-        type="text"
-        name="link"
-      />
-      <editor
-        :value="isEmpty(userLink) ? null : userLink"
-        @saved="manageLink"
-      />
+      <input v-if="creating" id="link" v-model="link" type="text" name="link" />
+      <editor :value="creating ? null : userLink" @saved="manageLink" />
     </section>
   </main>
 </template>
@@ -55,11 +44,13 @@ export default {
       bio: '',
       userLink: '',
       link: '',
-      message: ''
+      message: '',
+      creating: true
     }
   },
   async mounted() {
     this.userLink = await this.getUserLink()
+    this.creating = this.isEmpty(this.userLink)
     if (this?.userLink?.link) {
       this.link = this?.userLink?.link
     }
@@ -75,7 +66,7 @@ export default {
       }
     },
     async manageLink(data) {
-      const method = this.isEmpty(this.userLink) ? 'POST' : 'PUT'
+      const method = this.creating ? 'POST' : 'PUT'
       const body = {
         link: this.link,
         ...data
