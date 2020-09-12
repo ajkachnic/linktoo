@@ -22,7 +22,7 @@
     "epic-spinners": "^1.1.0",
     "express-session": "^1.17.1",
     "next-connect": "^0.6.5",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "nuxt": "^2.0.0",
     "passport": "^0.4.1",
     "passport-github": "^1.1.0",
