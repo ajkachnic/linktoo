@@ -28,7 +28,7 @@
     "passport-github": "^1.1.0",
     "passport-google-oauth": "^2.0.0",
     "passport-twitter": "^1.0.4",
-    "sanitize-html": "^1.23.0",
+    "sanitize-html": "^2.3.2",
     "sweetalert2": "^9.10.12",
     "vuex": "^3.3.0"
   },
